@@ -1,0 +1,40 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.lucid.launcher'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.lucid.launcher"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        debug { minifyEnabled false }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                         'proguard-rules.pro'
+            if (System.getenv("KEYSTORE_B64") != null) {
+                signingConfigs {
+                    release {
+                        storeFile file("${System.getenv('HOME')}/keystore.jks")
+                        storePassword System.getenv("KEYSTORE_PASS")
+                        keyAlias System.getenv("KEY_ALIAS")
+                        keyPassword System.getenv("KEY_PASS")
+                    }
+                }
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

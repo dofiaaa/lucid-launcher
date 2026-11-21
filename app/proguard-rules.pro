@@ -1,0 +1,2 @@
+-dontwarn android.**
+-keep class com.lucid.launcher.** { *; }
